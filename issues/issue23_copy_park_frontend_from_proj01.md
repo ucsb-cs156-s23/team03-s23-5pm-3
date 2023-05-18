@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 Bring over frontend crud files for Park from team01
 
 # Acceptance Criteria:
 
 All of the following refer to the forms, tables, pages, etc. for the frontend of the CRUD operations for 'Park'
+=======
+Bring over frontend crud files for Book from team01
+
+# Acceptance Criteria:
+
+All of the following refer to the forms, tables, pages, etc. for the frontend of the CRUD operations for 'Book'
+>>>>>>> 7a0d7d4 (updated issues)
 
 - [ ] The relevant Form and Table components along with the tests and storybook entries have been copied from team01 into team03
 - [ ] The relevant pages, along with the tests and storybook entries have been copied from team01 into team03
