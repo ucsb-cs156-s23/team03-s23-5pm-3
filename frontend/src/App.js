@@ -3,9 +3,9 @@ import HomePage from "main/pages/HomePage";
 import ProfilePage from "main/pages/ProfilePage";
 import AdminUsersPage from "main/pages/AdminUsersPage";
 
-import TodosIndexPage from "main/pages/Todos/TodosIndexPage";
-import TodosCreatePage from "main/pages/Todos/TodosCreatePage";
-import TodosEditPage from "main/pages/Todos/TodosEditPage";
+import BooksIndexPage from "main/pages/Books/BooksIndexPage";
+import BooksCreatePage from "main/pages/Books/BooksCreatePage";
+import BooksEditPage from "main/pages/Books/BooksEditPage";
 
 import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
@@ -32,9 +32,9 @@ function App() {
         {
           hasRole(currentUser, "ROLE_USER") && (
             <>
-              <Route exact path="/todos/list" element={<TodosIndexPage />} />
-              <Route exact path="/todos/create" element={<TodosCreatePage />} />
-              <Route exact path="/todos/edit/:todoId" element={<TodosEditPage />} />
+              <Route exact path="/Books/list" element={<BooksIndexPage />} />
+              <Route exact path="/Books/create" element={<BooksCreatePage />} />
+              <Route exact path="/Books/edit/:todoId" element={<BooksEditPage />} />
             </>
           )
         }
