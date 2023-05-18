@@ -19,5 +19,5 @@ Throughout this issue, `Park` is whatever the second model (in addition to `Park
          `model3s` listed in the table.
       3. Use `\q` to quit
 
-- [ ] The backend POST,GET,PUT,DELETE endpoints for `Restauarant` all work properly in Swagger.
+- [ ] The backend POST,GET,PUT,DELETE endpoints for `Park` all work properly in Swagger.
 

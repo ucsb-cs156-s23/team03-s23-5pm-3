@@ -17,4 +17,4 @@ Bring over backend crud files for Restaurant from team02
          `restaurants` listed in the table.
       3. Use `\q` to quit
 
-- [ ] The backend POST,GET,PUT,DELETE endpoints for `Restauarant` all work properly in Swagger.
+- [ ] The backend POST,GET,PUT,DELETE endpoints for `Restaurant` all work properly in Swagger.

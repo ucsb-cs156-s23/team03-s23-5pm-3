@@ -19,5 +19,5 @@ Throughout this issue, `Book` is whatever the second model (in addition to `Book
          `Books` listed in the table.
       3. Use `\q` to quit
 
-- [ ] The backend POST,GET,PUT,DELETE endpoints for `Restauarant` all work properly in Swagger.
+- [ ] The backend POST,GET,PUT,DELETE endpoints for `Book` all work properly in Swagger.
 
