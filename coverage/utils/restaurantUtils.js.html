@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for utils/bookUtils.js</title>
+    <title>Code coverage report for utils/restaurantUtils.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">utils</a> bookUtils.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">utils</a> restaurantUtils.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -247,87 +247,87 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// get books from local storage
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// get restaurants from local storage
 const get = () =&gt; {
-    const bookValue = localStorage.getItem("books");
-    if (bookValue === undefined) {
-        const bookCollection = { nextId: 1, books: [] }
-        return set(bookCollection);
+    const restaurantValue = localStorage.getItem("restaurants");
+    if (restaurantValue === undefined) {
+        const restaurantCollection = { nextId: 1, restaurants: [] }
+        return set(restaurantCollection);
     }
-    const bookCollection = JSON.parse(bookValue);
-    if (bookCollection === null) {
-        const bookCollection = { nextId: 1, books: [] }
-        return set(bookCollection);
+    const restaurantCollection = JSON.parse(restaurantValue);
+    if (restaurantCollection === null) {
+        const restaurantCollection = { nextId: 1, restaurants: [] }
+        return set(restaurantCollection);
     }
-    return bookCollection;
+    return restaurantCollection;
 };
 &nbsp;
 const getById = (id) =&gt; {
     if (id === undefined) {
         return { "error": "id is a required parameter" };
     }
-    const bookCollection = get();
-    const books = bookCollection.books;
+    const restaurantCollection = get();
+    const restaurants = restaurantCollection.restaurants;
 &nbsp;
     /* eslint-disable-next-line eqeqeq */ // we really do want == here, not ===
-    const index = books.findIndex((r) =&gt; r.id == id);
+    const index = restaurants.findIndex((r) =&gt; r.id == id);
     if (index === -1) {
-        return { "error": `book with id ${id} not found` };
+        return { "error": `restaurant with id ${id} not found` };
     }
-    return { book: books[index] };
+    return { restaurant: restaurants[index] };
 }
 &nbsp;
-// set books in local storage
-const set = (bookCollection) =&gt; {
-    localStorage.setItem("books", JSON.stringify(bookCollection));
-    return bookCollection;
+// set restaurants in local storage
+const set = (restaurantCollection) =&gt; {
+    localStorage.setItem("restaurants", JSON.stringify(restaurantCollection));
+    return restaurantCollection;
 };
 &nbsp;
-// add a book to local storage
-const add = (book) =&gt; {
-    const bookCollection = get();
-    book = { ...book, id: bookCollection.nextId };
-    bookCollection.nextId++;
-    bookCollection.books.push(book);
-    set(bookCollection);
-    return book;
+// add a restaurant to local storage
+const add = (restaurant) =&gt; {
+    const restaurantCollection = get();
+    restaurant = { ...restaurant, id: restaurantCollection.nextId };
+    restaurantCollection.nextId++;
+    restaurantCollection.restaurants.push(restaurant);
+    set(restaurantCollection);
+    return restaurant;
 };
 &nbsp;
-// update a book in local storage
-const update = (book) =&gt; {
-    const bookCollection = get();
+// update a restaurant in local storage
+const update = (restaurant) =&gt; {
+    const restaurantCollection = get();
 &nbsp;
-    const books = bookCollection.books;
+    const restaurants = restaurantCollection.restaurants;
 &nbsp;
     /* eslint-disable-next-line eqeqeq */ // we really do want == here, not ===
-    const index = books.findIndex((r) =&gt; r.id == book.id);
+    const index = restaurants.findIndex((r) =&gt; r.id == restaurant.id);
     if (index === -1) {
-        return { "error": `book with id ${book.id} not found` };
+        return { "error": `restaurant with id ${restaurant.id} not found` };
     }
-    books[index] = book;
-    set(bookCollection);
-    return { bookCollection: bookCollection };
+    restaurants[index] = restaurant;
+    set(restaurantCollection);
+    return { restaurantCollection: restaurantCollection };
 };
 &nbsp;
-// delete a book from local storage
+// delete a restaurant from local storage
 const del = (id) =&gt; {
     if (id === undefined) {
         return { "error": "id is a required parameter" };
     }
-    const bookCollection = get();
-    const books = bookCollection.books;
+    const restaurantCollection = get();
+    const restaurants = restaurantCollection.restaurants;
 &nbsp;
     /* eslint-disable-next-line eqeqeq */ // we really do want == here, not ===
-    const index = books.findIndex((r) =&gt; r.id == id);
+    const index = restaurants.findIndex((r) =&gt; r.id == id);
     if (index === -1) {
-        return { "error": `book with id ${id} not found` };
+        return { "error": `restaurant with id ${id} not found` };
     }
-    books.splice(index, 1);
-    set(bookCollection);
-    return { bookCollection: bookCollection };
+    restaurants.splice(index, 1);
+    set(restaurantCollection);
+    return { restaurantCollection: restaurantCollection };
 };
 &nbsp;
-const bookUtils = {
+const restaurantUtils = {
     get,
     getById,
     add,
@@ -335,7 +335,7 @@ const bookUtils = {
     del
 };
 &nbsp;
-export { bookUtils };
+export { restaurantUtils };
 &nbsp;
 &nbsp;
 &nbsp;

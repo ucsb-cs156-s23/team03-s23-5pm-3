@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for components/Nav/AppNavbarLocalhost.js</title>
+    <title>Code coverage report for pages/Restaurants/RestaurantIndexPage.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/Nav</a> AppNavbarLocalhost.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Restaurants</a> RestaurantIndexPage.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -91,15 +91,12 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -108,6 +105,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -118,35 +129,39 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Container, Nav, Navbar } from "react-bootstrap";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react'
+import Button from 'react-bootstrap/Button';
+import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+import RestaurantTable from 'main/components/Restaurants/RestaurantTable';
+import { restaurantUtils } from 'main/utils/restaurantUtils';
+import { useNavigate, Link } from 'react-router-dom';
 &nbsp;
-export default function AppNavbarLocalhost({url}) {
-  return (
-    &lt;&gt;
-      &lt;Navbar expand="sm" bg="warning" sticky="top" data-testid="AppNavbarLocalhost"&gt;
-        &lt;Container&gt;
-          &lt;Navbar.Brand href="http://localhost:8080"&gt;
-            Warning
-          &lt;/Navbar.Brand&gt;
+export default function RestaurantIndexPage() {
 &nbsp;
-          &lt;Navbar.Toggle /&gt;
+    const navigate = useNavigate();
 &nbsp;
-          &lt;Navbar.Collapse className="justify-content-between"&gt;
+    const restaurantCollection = restaurantUtils.get();
+    const restaurants = restaurantCollection.restaurants;
 &nbsp;
-            &lt;Nav className="mr-auto text-center"&gt;
-              &lt;Nav.Item className="text-center"&gt;
-                &lt;p&gt;
-                  Running on &lt;code&gt;{ url }&lt;/code&gt; with no backend.&lt;br /&gt;
-                  You probably want &lt;a href="http://localhost:8080"&gt;http://localhost:8080&lt;/a&gt; instead.
-                &lt;/p&gt;
-              &lt;/Nav.Item&gt;
-            &lt;/Nav&gt;
-            &lt;/Navbar.Collapse&gt;
-        &lt;/Container&gt;
-      &lt;/Navbar &gt;
-    &lt;/&gt;
-  );
+    const showCell = (cell) =&gt; JSON.stringify(cell.row.values);
+&nbsp;
+    const deleteCallback = async (cell) =&gt; {
+        console.log(`RestaurantIndexPage deleteCallback: ${showCell(cell)})`);
+        restaurantUtils.del(cell.row.values.id);
+        navigate("/restaurants");
+    }
+&nbsp;
+    return (
+        &lt;BasicLayout&gt;
+            &lt;div className="pt-2"&gt;
+                &lt;Button style={{ float: "right" }} as={Link} to="/restaurants/create"&gt;
+                    Create Restaurant
+                &lt;/Button&gt;
+                &lt;h1&gt;Restaurants&lt;/h1&gt;
+                &lt;RestaurantTable restaurants={restaurants} deleteCallback={deleteCallback} /&gt;
+            &lt;/div&gt;
+        &lt;/BasicLayout&gt;
+    )
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
