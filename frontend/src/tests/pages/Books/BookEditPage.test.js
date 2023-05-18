@@ -66,7 +66,7 @@ describe("BookEditPage tests", () => {
 
     });
 
-    test("redirects to /Books on submit", async () => {
+    test("redirects to /books on submit", async () => {
 
         const restoreConsole = mockConsole();
 
@@ -109,7 +109,7 @@ describe("BookEditPage tests", () => {
         });
 
         await waitFor(() => expect(mockUpdate).toHaveBeenCalled());
-        await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/Books"));
+        await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/books"));
 
         // assert - check that the console.log was called with the expected message
         expect(console.log).toHaveBeenCalled();
