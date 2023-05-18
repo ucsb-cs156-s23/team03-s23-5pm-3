@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for utils/bookUtils.js</title>
+    <title>Code coverage report for utils/parkUtils.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">utils</a> bookUtils.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">utils</a> parkUtils.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -247,87 +247,87 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// get books from local storage
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// get parks from local storage
 const get = () =&gt; {
-    const bookValue = localStorage.getItem("books");
-    if (bookValue === undefined) {
-        const bookCollection = { nextId: 1, books: [] }
-        return set(bookCollection);
+    const parkValue = localStorage.getItem("parks");
+    if (parkValue === undefined) {
+        const parkCollection = { nextId: 1, parks: [] }
+        return set(parkCollection);
     }
-    const bookCollection = JSON.parse(bookValue);
-    if (bookCollection === null) {
-        const bookCollection = { nextId: 1, books: [] }
-        return set(bookCollection);
+    const parkCollection = JSON.parse(parkValue);
+    if (parkCollection === null) {
+        const parkCollection = { nextId: 1, parks: [] }
+        return set(parkCollection);
     }
-    return bookCollection;
+    return parkCollection;
 };
 &nbsp;
 const getById = (id) =&gt; {
     if (id === undefined) {
         return { "error": "id is a required parameter" };
     }
-    const bookCollection = get();
-    const books = bookCollection.books;
+    const parkCollection = get();
+    const parks = parkCollection.parks;
 &nbsp;
     /* eslint-disable-next-line eqeqeq */ // we really do want == here, not ===
-    const index = books.findIndex((r) =&gt; r.id == id);
+    const index = parks.findIndex((r) =&gt; r.id == id);
     if (index === -1) {
-        return { "error": `book with id ${id} not found` };
+        return { "error": `park with id ${id} not found` };
     }
-    return { book: books[index] };
+    return { park: parks[index] };
 }
 &nbsp;
-// set books in local storage
-const set = (bookCollection) =&gt; {
-    localStorage.setItem("books", JSON.stringify(bookCollection));
-    return bookCollection;
+// set parks in local storage
+const set = (parkCollection) =&gt; {
+    localStorage.setItem("parks", JSON.stringify(parkCollection));
+    return parkCollection;
 };
 &nbsp;
-// add a book to local storage
-const add = (book) =&gt; {
-    const bookCollection = get();
-    book = { ...book, id: bookCollection.nextId };
-    bookCollection.nextId++;
-    bookCollection.books.push(book);
-    set(bookCollection);
-    return book;
+// add a park to local storage
+const add = (park) =&gt; {
+    const parkCollection = get();
+    park = { ...park, id: parkCollection.nextId };
+    parkCollection.nextId++;
+    parkCollection.parks.push(park);
+    set(parkCollection);
+    return park;
 };
 &nbsp;
-// update a book in local storage
-const update = (book) =&gt; {
-    const bookCollection = get();
+// update a park in local storage
+const update = (park) =&gt; {
+    const parkCollection = get();
 &nbsp;
-    const books = bookCollection.books;
+    const parks = parkCollection.parks;
 &nbsp;
     /* eslint-disable-next-line eqeqeq */ // we really do want == here, not ===
-    const index = books.findIndex((r) =&gt; r.id == book.id);
+    const index = parks.findIndex((r) =&gt; r.id == park.id);
     if (index === -1) {
-        return { "error": `book with id ${book.id} not found` };
+        return { "error": `park with id ${park.id} not found` };
     }
-    books[index] = book;
-    set(bookCollection);
-    return { bookCollection: bookCollection };
+    parks[index] = park;
+    set(parkCollection);
+    return { parkCollection: parkCollection };
 };
 &nbsp;
-// delete a book from local storage
+// delete a park from local storage
 const del = (id) =&gt; {
     if (id === undefined) {
         return { "error": "id is a required parameter" };
     }
-    const bookCollection = get();
-    const books = bookCollection.books;
+    const parkCollection = get();
+    const parks = parkCollection.parks;
 &nbsp;
     /* eslint-disable-next-line eqeqeq */ // we really do want == here, not ===
-    const index = books.findIndex((r) =&gt; r.id == id);
+    const index = parks.findIndex((r) =&gt; r.id == id);
     if (index === -1) {
-        return { "error": `book with id ${id} not found` };
+        return { "error": `park with id ${id} not found` };
     }
-    books.splice(index, 1);
-    set(bookCollection);
-    return { bookCollection: bookCollection };
+    parks.splice(index, 1);
+    set(parkCollection);
+    return { parkCollection: parkCollection };
 };
 &nbsp;
-const bookUtils = {
+const parkUtils = {
     get,
     getById,
     add,
@@ -335,7 +335,7 @@ const bookUtils = {
     del
 };
 &nbsp;
-export { bookUtils };
+export { parkUtils };
 &nbsp;
 &nbsp;
 &nbsp;
@@ -346,7 +346,7 @@ export { bookUtils };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Thu May 18 2023 14:49:57 GMT-0700 (Pacific Daylight Time)
+                at Thu May 18 2023 14:54:18 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../prettify.js"></script>
         <script>
