@@ -3,9 +3,9 @@ import HomePage from "main/pages/HomePage";
 import ProfilePage from "main/pages/ProfilePage";
 import AdminUsersPage from "main/pages/AdminUsersPage";
 
-import BooksIndexPage from "main/pages/Books/BooksIndexPage";
-import BooksCreatePage from "main/pages/Books/BooksCreatePage";
-import BooksEditPage from "main/pages/Books/BooksEditPage";
+import BookIndexPage from "main/pages/Books/BookIndexPage";
+import BookCreatePage from "main/pages/Books/BookCreatePage";
+import BookEditPage from "main/pages/Books/BookEditPage";
 
 import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
 import RestaurantEditPage from "main/pages/Restaurants/RestaurantEditPage";
@@ -38,17 +38,20 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
 
+
               <Route exact path="/todos/list" element={<TodosIndexPage />} />
               <Route exact path="/todos/create" element={<TodosCreatePage />} />
               <Route exact path="/todos/edit/:todoId" element={<TodosEditPage />} />
 
+        
               
-              <Route exact path="/restaurants/details/:id" element={<RestaurantDetailsPage />} />
-              
+              <Route exact path="/restaurants/details/:id" element={<RestaurantDetailsPage />} />      
 
-              <Route exact path="/Books/list" element={<BooksIndexPage />} />
-              <Route exact path="/Books/create" element={<BooksCreatePage />} />
-              <Route exact path="/Books/edit/:todoId" element={<BooksEditPage />} />
+
+              <Route exact path="/Books/list" element={<BookIndexPage />} />
+              <Route exact path="/Books/create" element={<BookCreatePage />} />
+              <Route exact path="/Books/edit/:todoId" element={<BookEditPage />} />
+
             </>
           )
         }
