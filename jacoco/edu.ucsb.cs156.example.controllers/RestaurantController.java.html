@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RestaurantController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">example</a> &gt; <a href="index.source.html" class="el_package">edu.ucsb.cs156.example.controllers</a> &gt; <span class="el_source">RestaurantController.java</span></div><h1>RestaurantController.java</h1><pre class="source lang-java linenums">package edu.ucsb.cs156.example.controllers;
+
+import edu.ucsb.cs156.example.entities.Restaurant;
+import edu.ucsb.cs156.example.errors.EntityNotFoundException;
+import edu.ucsb.cs156.example.repositories.RestaurantRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+
+
+@Api(description = &quot;Restaurant&quot;)
+@RequestMapping(&quot;/api/restaurant&quot;)
+@RestController
+<span class="fc" id="L28">@Slf4j</span>
+<span class="fc" id="L29">public class RestaurantController extends ApiController {</span>
+
+    @Autowired
+    RestaurantRepository restaurantRepository;
+
+    @ApiOperation(value = &quot;List all restaurants&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;/all&quot;)
+    public Iterable&lt;Restaurant&gt; allRestaurants() {
+<span class="fc" id="L38">        Iterable&lt;Restaurant&gt; restaurants = restaurantRepository.findAll();</span>
+<span class="fc" id="L39">        return restaurants;</span>
+    }
+
+    @ApiOperation(value = &quot;Get a single restaurant&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;&quot;)
+    public Restaurant getById(
+            @ApiParam(&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L47">        Restaurant restaurant = restaurantRepository.findById(id)</span>
+<span class="fc" id="L48">                .orElseThrow(() -&gt; new EntityNotFoundException(Restaurant.class, id));</span>
+
+<span class="fc" id="L50">        return restaurant;</span>
+    }
+
+    @ApiOperation(value = &quot;Create a new restaurant&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PostMapping(&quot;/post&quot;)
+    public Restaurant postRestaurant(
+        @ApiParam(&quot;name&quot;) @RequestParam String name,
+        @ApiParam(&quot;address&quot;) @RequestParam String address,
+        @ApiParam(&quot;city&quot;) @RequestParam String city,
+        @ApiParam(&quot;state&quot;) @RequestParam String state,
+        @ApiParam(&quot;zip&quot;) @RequestParam String zip,
+        @ApiParam(&quot;description&quot;) @RequestParam String description
+        )
+        {
+
+<span class="fc" id="L66">        Restaurant restaurant = new Restaurant();</span>
+<span class="fc" id="L67">        restaurant.setName(name);</span>
+<span class="fc" id="L68">        restaurant.setAddress(address);</span>
+<span class="fc" id="L69">        restaurant.setCity(city);</span>
+<span class="fc" id="L70">        restaurant.setState(state);</span>
+<span class="fc" id="L71">        restaurant.setZip(zip);</span>
+<span class="fc" id="L72">        restaurant.setDescription(description);</span>
+
+<span class="fc" id="L74">        Restaurant savedRestaurant = restaurantRepository.save(restaurant);</span>
+
+<span class="fc" id="L76">        return savedRestaurant;</span>
+    }
+
+    @ApiOperation(value = &quot;Delete a restaurant&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteRestaurant(
+            @ApiParam(&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L84">        Restaurant restaurant = restaurantRepository.findById(id)</span>
+<span class="fc" id="L85">                .orElseThrow(() -&gt; new EntityNotFoundException(Restaurant.class, id));</span>
+
+<span class="fc" id="L87">        restaurantRepository.delete(restaurant);</span>
+<span class="fc" id="L88">        return genericMessage(&quot;Restaurant with id %s deleted&quot;.formatted(id));</span>
+    }
+
+    @ApiOperation(value = &quot;Update a single restaurant&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public Restaurant updateRestaurant(
+            @ApiParam(&quot;id&quot;) @RequestParam Long id,
+            @RequestBody @Valid Restaurant incoming) {
+
+<span class="fc" id="L98">        Restaurant restaurant = restaurantRepository.findById(id)</span>
+<span class="fc" id="L99">                .orElseThrow(() -&gt; new EntityNotFoundException(Restaurant.class, id));</span>
+
+<span class="fc" id="L101">        restaurant.setName(incoming.getName());</span>
+<span class="fc" id="L102">        restaurant.setAddress(incoming.getAddress());</span>
+<span class="fc" id="L103">        restaurant.setCity(incoming.getCity());</span>
+<span class="fc" id="L104">        restaurant.setState(incoming.getState());</span>
+<span class="fc" id="L105">        restaurant.setZip(incoming.getZip());</span>
+<span class="fc" id="L106">        restaurant.setDescription(incoming.getDescription());</span>
+
+<span class="fc" id="L108">        restaurantRepository.save(restaurant);</span>
+
+<span class="fc" id="L110">        return restaurant;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
