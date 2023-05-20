@@ -4,7 +4,7 @@ Throughout this issue, `Park` is whatever the second model (in addition to `Park
 
 # Acceptance Criteria:
 
-- [ ] The `@Entity` class called Park.java has been copied from the team02 repo to the team03 repo and committed.
+- [ ] The `@Entity` class called `Park.java` has been copied from the team02 repo to the team03 repo and committed.
 - [ ] The `@Repository` class called `ParkRepository.java` has been copied from the team02 repo to the team03 repo and committed.  (Note that the file should be `ParkRepository.java`; the team02 instrutions erronously called it `Park.java`; if you called it `Park.java` please update the name now)
 - [ ] The `@Repository` class called `ParkRepository.java` has been copied from the team02 repo to the team03 repo and committed.  (Note that the file should be `ParkRepository.java`; the team02 instrutions erronously called it `Park.java`; if you called it `Park.java` please update the name now)
 - [ ] The controller file `ParkController.java` is copied from team02 to team03
