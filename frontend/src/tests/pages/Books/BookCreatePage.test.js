@@ -60,7 +60,7 @@ describe("BookCreatePage tests", () => {
             genre: "Horror",
         };
 
-        axiosMock.onPost("/api/Books/post").reply( 202, Book );
+        axiosMock.onPost("/api/books/post").reply( 202, Book );
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>

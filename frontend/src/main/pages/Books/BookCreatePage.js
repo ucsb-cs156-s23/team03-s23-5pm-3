@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 export default function BooksCreatePage() {
 
   const objectToAxiosParams = (Book) => ({
-    url: "/api/Books/post",
+    url: "/api/books/post",
     method: "POST",
     params: {
       title: Book.title,
@@ -24,7 +24,7 @@ export default function BooksCreatePage() {
     objectToAxiosParams,
      { onSuccess }, 
      // Stryker disable next-line all : hard to set up test for caching
-     ["/api/Books/all"]
+     ["/api/books/all"]
      );
 
   const { isSuccess } = mutation
