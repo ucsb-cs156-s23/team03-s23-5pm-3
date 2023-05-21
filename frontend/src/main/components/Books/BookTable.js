@@ -1,33 +1,40 @@
 import React from "react";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
+import { useBackendMutation } from "main/utils/useBackend";
+import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/bookUtils";
 import { useNavigate } from "react-router-dom";
-import { bookUtils } from "main/utils/bookUtils";
+import { hasRole } from "main/utils/currentUser";
 
 const showCell = (cell) => JSON.stringify(cell.row.values);
 
-
-const defaultDeleteCallback = async (cell) => {
-    console.log(`deleteCallback: ${showCell(cell)})`);
-    bookUtils.del(cell.row.values.id);
-}
-
 export default function BookTable({
     books,
-    deleteCallback = defaultDeleteCallback,
-    showButtons = true,
+    currentUser,
     testIdPrefix = "BookTable" }) {
 
     const navigate = useNavigate();
- 
+
+    const deleteMutation = useBackendMutation(
+        cellToAxiosParamsDelete,
+        { onSuccess: onDeleteSuccess },
+        ["/api/books/all"]
+    );
+
     const editCallback = (cell) => {
         console.log(`editCallback: ${showCell(cell)})`);
-        navigate(`/books/edit/${cell.row.values.id}`)
-    }
+        navigate(`/books/edit/${cell.row.values.id}`);
+    };
 
     const detailsCallback = (cell) => {
         console.log(`detailsCallback: ${showCell(cell)})`);
-        navigate(`/books/details/${cell.row.values.id}`)
-    }
+        navigate(`/books/details/${cell.row.values.id}`);
+    };
+
+    const deleteCallback = async (cell) => {
+        console.log(`deleteCallback: ${showCell(cell)})`);
+        deleteMutation.mutate(cell);
+    };
+
 
     const columns = [
         {
@@ -52,15 +59,20 @@ export default function BookTable({
     const buttonColumns = [
         ...columns,
         ButtonColumn("Details", "primary", detailsCallback, testIdPrefix),
-        ButtonColumn("Edit", "primary", editCallback, testIdPrefix),
-        ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
-    ]
+    ];
 
-    const columnsToDisplay = showButtons ? buttonColumns : columns;
+    if (hasRole(currentUser, "ROLE_ADMIN")) {
+        buttonColumns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
+        buttonColumns.push(ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix));
+    }
+
+    // Stryker disable next-line ArrayDeclaration : [buttonColumns] is a performance optimization
+    const memoizedColumns = React.useMemo(() => buttonColumns, [buttonColumns]);
+    const memoizedBooks = React.useMemo(() => books, [books]);
 
     return <OurTable
-        data={books}
-        columns={columnsToDisplay}
+        data={memoizedBooks}
+        columns={memoizedColumns}
         testid={testIdPrefix}
     />;
 };
