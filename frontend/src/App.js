@@ -6,6 +6,8 @@ import AdminUsersPage from "main/pages/AdminUsersPage";
 import BookIndexPage from "main/pages/Books/BookIndexPage";
 import BookCreatePage from "main/pages/Books/BookCreatePage";
 import BookEditPage from "main/pages/Books/BookEditPage";
+import BookDetailsPage from "main/pages/Books/BookDetailsPage";
+
 
 import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
@@ -35,6 +37,7 @@ function App() {
               <Route exact path="/Books/list" element={<BookIndexPage />} />
               <Route exact path="/Books/create" element={<BookCreatePage />} />
               <Route exact path="/Books/edit/:todoId" element={<BookEditPage />} />
+              
             </>
           )
         }
