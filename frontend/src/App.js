@@ -48,7 +48,6 @@ function App() {
               <Route exact path="/restaurants/create" element={<RestaurantCreatePage />} />
               <Route exact path="/restaurants/edit/:id" element={<RestaurantEditPage />} />
               <Route exact path="/restaurants/" element={<RestaurantIndexPage />} />
-            
               <Route exact path="/restaurants/details/:id" element={<RestaurantDetailsPage />} />
               
             </>
