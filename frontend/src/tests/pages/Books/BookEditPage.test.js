@@ -35,7 +35,7 @@ jest.mock('react-router-dom', () => {
 
 describe("BookEditPage tests", () => {
 
-    describe("when the backend doesn't return a todo", () => {
+    describe("when the backend doesn't return a book", () => {
 
         const axiosMock = new AxiosMockAdapter(axios);
 
@@ -44,7 +44,7 @@ describe("BookEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/Books", { params: { id: 17 } }).timeout();
+            axiosMock.onGet("/api/books", { params: { id: 17 } }).timeout();
         });
 
         const queryClient = new QueryClient();
@@ -59,7 +59,7 @@ describe("BookEditPage tests", () => {
                     </MemoryRouter>
                 </QueryClientProvider>
             );
-            await findByText("Edit Books");
+            await findByText("Edit Book");
             expect(queryByTestId("BookForm-title")).not.toBeInTheDocument();
             restoreConsole();
         });
@@ -74,13 +74,13 @@ describe("BookEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/Books", { params: { id: 17 } }).reply(200, {
+            axiosMock.onGet("/api/books", { params: { id: 17 } }).reply(200, {
                 id: 17,
                 title: 'IT',
                 author: "Stephen King",
                 genre: "Horror"
             });
-            axiosMock.onPut('/api/Books').reply(200, {
+            axiosMock.onPut('/api/books').reply(200, {
                 id: "17",
                 title: 'IT2',
                 author: "Stephen King2",
@@ -157,7 +157,7 @@ describe("BookEditPage tests", () => {
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled);
-            expect(mockToast).toBeCalledWith("Books Updated - id: 17 author: Stephen King2");
+            expect(mockToast).toBeCalledWith("Book Updated - id: 17 title: IT2 author: Stephen King2 genre: Horror2");
             expect(mockNavigate).toBeCalledWith({ "to": "/Books/list" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called

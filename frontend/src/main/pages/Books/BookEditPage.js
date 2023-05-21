@@ -11,10 +11,10 @@ export default function BooksEditPage() {
   const { data: Book, error, status } =
     useBackend(
       // Stryker disable next-line all : don't test internal caching of React Query
-      [`/api/Books?id=${id}`],
+      [`/api/books?id=${id}`],
       {  // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
         method: "GET",
-        url: `/api/Books`,
+        url: `/api/books`,
         params: {
           id
         }
@@ -23,7 +23,7 @@ export default function BooksEditPage() {
 
 
   const objectToAxiosPutParams = (Book) => ({
-    url: "/api/Books",
+    url: "/api/books",
     method: "PUT",
     params: {
       id: Book.id,
@@ -43,7 +43,7 @@ export default function BooksEditPage() {
     objectToAxiosPutParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    [`/api/Books?id=${id}`]
+    [`/api/books?id=${id}`]
   );
 
   const { isSuccess } = mutation
@@ -61,7 +61,7 @@ export default function BooksEditPage() {
       <div className="pt-2">
         <h1>Edit Book</h1>
         {Book &&
-          <BookForm initialBook={Book} submitAction={onSubmit} buttonLabel="Update" />
+          <BookForm initialContents={Book} submitAction={onSubmit} buttonLabel="Update" />
         }
       </div>
     </BasicLayout>
