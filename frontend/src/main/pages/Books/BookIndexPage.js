@@ -9,11 +9,11 @@ export default function BooksIndexPage() {
 
   const currentUser = useCurrentUser();
 
-  const { data: dates, error: _error, status: _status } =
+  const { data: books, error: _error, status: _status } =
     useBackend(
       // Stryker disable next-line all : don't test internal caching of React Query
-      ["/api/Books/all"],
-      { method: "GET", url: "/api/Books/all" },
+      ["/api/books/all"],
+      { method: "GET", url: "/api/books/all" },
       []
     );
 
@@ -21,7 +21,7 @@ export default function BooksIndexPage() {
     <BasicLayout>
       <div className="pt-2">
         <h1>Books</h1>
-        <BooksTable dates={dates} currentUser={currentUser} />
+        <BooksTable books={books} currentUser={currentUser} />
       </div>
     </BasicLayout>
   )
