@@ -88,10 +88,49 @@ describe("BookTable tests", () => {
     expect(editButton).toBeInTheDocument();
     expect(editButton).toHaveClass("btn-primary");
 
+    const detailsButton = getByTestId(`${testId}-cell-row-0-col-Details-button`);
+    expect(detailsButton).toBeInTheDocument();
+    expect(detailsButton).toHaveClass("btn-primary");
+
     const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
 
+  });
+
+  test("Has the expected column headers, content and no buttons when showButtons=false", () => {
+    const currentUser = currentUserFixtures.adminUser;
+
+    const { getByText, getByTestId, queryByText } = render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <BookTable books={bookFixtures.threeBooks} currentUser={currentUser} showButtons={false} />
+        </MemoryRouter>
+      </QueryClientProvider>
+
+    );
+
+    const expectedHeaders = ["id", "Title", "Author", "Genre"];
+    const expectedFields = ["id", "title", "author", "genre"];
+    const testId = "BookTable";
+
+    expectedHeaders.forEach((headerText) => {
+      const header = getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
+
+    expectedFields.forEach((field) => {
+      const header = getByTestId(`${testId}-cell-row-0-col-${field}`);
+      expect(header).toBeInTheDocument();
+    });
+
+    expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3");
+    expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("4");
+
+    expect(queryByText("Delete")).not.toBeInTheDocument();
+    expect(queryByText("Edit")).not.toBeInTheDocument();
+    expect(queryByText("Details")).not.toBeInTheDocument();
   });
 
   test("Edit button navigates to the edit page for admin user", async () => {
@@ -114,7 +153,30 @@ describe("BookTable tests", () => {
 
     fireEvent.click(editButton);
 
-    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/books/edit/2'));
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/Books/edit/2'));
+
+  });
+  test("Details button navigates to the details page for admin user", async () => {
+
+    const currentUser = currentUserFixtures.adminUser;
+
+    const { getByText, getByTestId } = render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <BookTable books={bookFixtures.threeBooks} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+
+    );
+
+    await waitFor(() => { expect(getByTestId(`BookTable-cell-row-0-col-id`)).toHaveTextContent("2"); });
+
+    const detailsButton = getByTestId(`BookTable-cell-row-0-col-Details-button`);
+    expect(detailsButton).toBeInTheDocument();
+
+    fireEvent.click(detailsButton);
+
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/Books/details/2'));
 
   });
 });

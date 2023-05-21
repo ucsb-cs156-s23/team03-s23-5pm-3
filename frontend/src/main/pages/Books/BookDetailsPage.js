@@ -29,8 +29,8 @@ export default function BooksDetailsPage() {
     <BasicLayout>
       <div className="pt-2">
         <h1>Book Details</h1>
-        {book &&
-          <BookTable books={book} currentUser={currentUser} />
+        {
+          <BookTable books={[book]} currentUser={currentUser} showButtons={false}/>
         }
       </div>
     </BasicLayout>

@@ -75,12 +75,7 @@ describe("BookDetailsPage tests", () => {
     test("renders without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/books", { params: { id: 17 } }).reply(200, {
-            id: 17,
-            title: 'IT',
-            author: "Stephen King",
-            genre: "Horror"
-        });
+        axiosMock.onGet("/api/books", { params: { id: 1 } }).reply(200, bookFixtures.oneBook);
         
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -90,7 +85,7 @@ describe("BookDetailsPage tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("17"); });
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
 
     });
 

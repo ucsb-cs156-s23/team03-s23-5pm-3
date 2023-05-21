@@ -10,6 +10,7 @@ const showCell = (cell) => JSON.stringify(cell.row.values);
 export default function BookTable({
     books,
     currentUser,
+    showButtons = true,
     testIdPrefix = "BookTable" }) {
 
     const navigate = useNavigate();
@@ -22,12 +23,12 @@ export default function BookTable({
 
     const editCallback = (cell) => {
         console.log(`editCallback: ${showCell(cell)})`);
-        navigate(`/books/edit/${cell.row.values.id}`);
+        navigate(`/Books/edit/${cell.row.values.id}`);
     };
 
     const detailsCallback = (cell) => {
         console.log(`detailsCallback: ${showCell(cell)})`);
-        navigate(`/books/details/${cell.row.values.id}`);
+        navigate(`/Books/details/${cell.row.values.id}`);
     };
 
     const deleteCallback = async (cell) => {
@@ -70,9 +71,11 @@ export default function BookTable({
     const memoizedColumns = React.useMemo(() => buttonColumns, [buttonColumns]);
     const memoizedBooks = React.useMemo(() => books, [books]);
 
+    const columnsToDisplay = showButtons ? memoizedColumns : columns;
+
     return <OurTable
         data={memoizedBooks}
-        columns={memoizedColumns}
+        columns={columnsToDisplay}
         testid={testIdPrefix}
     />;
 };
