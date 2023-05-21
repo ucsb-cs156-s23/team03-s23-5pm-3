@@ -27,7 +27,7 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 
 @Api(description = "Book")
-@RequestMapping("/api/Book")
+@RequestMapping("/api/books")
 @RestController
 @Slf4j
 public class BookController extends ApiController {
