@@ -35,9 +35,15 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
               <Route exact path="/Books/list" element={<BookIndexPage />} />
+              <Route exact path="/Books/details/:id" element={<BookDetailsPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
               <Route exact path="/Books/create" element={<BookCreatePage />} />
-              <Route exact path="/Books/edit/:todoId" element={<BookEditPage />} />
-              
+              <Route exact path="/Books/edit/:id" element={<BookEditPage />} />
             </>
           )
         }
