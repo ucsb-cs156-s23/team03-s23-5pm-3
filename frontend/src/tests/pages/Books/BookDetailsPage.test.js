@@ -8,6 +8,7 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { bookFixtures } from "fixtures/bookFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import mockConsole from "jest-mock-console";
 
 jest.mock("react-router-dom", () => {
     const originalModule = jest.requireActual("react-router-dom");
@@ -50,6 +51,7 @@ describe("BookDetailsPage tests", () => {
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
         axiosMock.onGet("/api/books").timeout();
 
+        const restoreConsole = mockConsole();
         const { queryByTestId, findByText } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
@@ -60,6 +62,7 @@ describe("BookDetailsPage tests", () => {
 
         await findByText("Book Details");
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
+        restoreConsole();
     });
 
     test("renders without crashing for regular user", async () => {
