@@ -6,6 +6,8 @@ import AdminUsersPage from "main/pages/AdminUsersPage";
 import BookIndexPage from "main/pages/Books/BookIndexPage";
 import BookCreatePage from "main/pages/Books/BookCreatePage";
 import BookEditPage from "main/pages/Books/BookEditPage";
+import BookDetailsPage from "main/pages/Books/BookDetailsPage";
+
 
 import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
 import RestaurantEditPage from "main/pages/Restaurants/RestaurantEditPage";
@@ -42,8 +44,15 @@ function App() {
 
 
               <Route exact path="/Books/list" element={<BookIndexPage />} />
+              <Route exact path="/Books/details/:id" element={<BookDetailsPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
               <Route exact path="/Books/create" element={<BookCreatePage />} />
-              <Route exact path="/Books/edit/:todoId" element={<BookEditPage />} />
+              <Route exact path="/Books/edit/:id" element={<BookEditPage />} />
 
               <Route exact path="/restaurants/create" element={<RestaurantCreatePage />} />
               <Route exact path="/restaurants/edit/:id" element={<RestaurantEditPage />} />
