@@ -2,7 +2,7 @@ const restaurantFixtures = {
     oneRestaurant:
     [
       {
-       "id": 1,
+        "id": 1,
         "name": "The Habit",
         "address": "888 Embarcadero del Norte",
         "city": "Isla Vista",
@@ -21,7 +21,7 @@ const restaurantFixtures = {
              "city": "Goleta",
              "state": "CA",
              "zip": "93117",
-             "description": "This place is takeout only.  It may look mostly like a bakery with Mexican pastries, but it also has amazing burritos and tacos",      
+             "description": "This place is takeout only.  It may look mostly like a bakery with Mexican pastries, but it also has amazing burritos and tacos"     
         },
 
         {
@@ -42,7 +42,7 @@ const restaurantFixtures = {
              "state": "CA",
              "zip": "93117",
              "description": "White tablecloth Italian restaurant, with great pasta and pizza"      
-        },
+        }
         
     ]
 };

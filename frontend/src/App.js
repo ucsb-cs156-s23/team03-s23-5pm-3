@@ -37,17 +37,13 @@ function App() {
         {
           hasRole(currentUser, "ROLE_USER") && (
             <>
-              
-              <Route exact path="/restaurants/details/:id" element={<RestaurantDetailsPage />} />      
-
-
               <Route exact path="/Books/list" element={<BookIndexPage />} />
               <Route exact path="/Books/create" element={<BookCreatePage />} />
               <Route exact path="/Books/edit/:todoId" element={<BookEditPage />} />
 
               <Route exact path="/restaurants/create" element={<RestaurantCreatePage />} />
               <Route exact path="/restaurants/edit/:id" element={<RestaurantEditPage />} />
-              <Route exact path="/restaurants/" element={<RestaurantIndexPage />} />
+              <Route exact path="/restaurants/list" element={<RestaurantIndexPage />} />
               <Route exact path="/restaurants/details/:id" element={<RestaurantDetailsPage />} />
               
             </>

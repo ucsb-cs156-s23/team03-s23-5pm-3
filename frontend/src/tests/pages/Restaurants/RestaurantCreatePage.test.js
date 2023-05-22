@@ -1,40 +1,46 @@
-import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
+import { render, waitFor, fireEvent } from "@testing-library/react";
 import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import mockConsole from "jest-mock-console";
 
-
-import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
+import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useNavigate: () => mockNavigate
-}));
-
-const mockAdd = jest.fn();
-jest.mock('main/utils/restaurantUtils', () => {
+const mockToast = jest.fn();
+jest.mock('react-toastify', () => {
+    const originalModule = jest.requireActual('react-toastify');
     return {
         __esModule: true,
-        restaurantUtils: {
-            add: () => { return mockAdd(); }
-        }
-    }
+        ...originalModule,
+        toast: (x) => mockToast(x)
+    };
+});
+
+const mockNavigate = jest.fn();
+jest.mock('react-router-dom', () => {
+    const originalModule = jest.requireActual('react-router-dom');
+    return {
+        __esModule: true,
+        ...originalModule,
+        Navigate: (x) => { mockNavigate(x); return null; }
+    };
 });
 
 describe("RestaurantCreatePage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
-    axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-    axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither); 
-    
-    const queryClient = new QueryClient();
+
+    beforeEach(() => {
+        axiosMock.reset();
+        axiosMock.resetHistory();
+        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+        axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+    });
+
     test("renders without crashing", () => {
+        const queryClient = new QueryClient();
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
@@ -44,55 +50,67 @@ describe("RestaurantCreatePage tests", () => {
         );
     });
 
-    test("redirects to /restaurants on submit", async () => {
+    test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
 
-        const restoreConsole = mockConsole();
+        const queryClient = new QueryClient(); 
+        const restaurant = {
+            id: 17,
+            name: 'The',
+            address: '888',
+            city: 'Isla',
+            state: 'C',
+            zip: '9311',
+            description: 'Burgers'         
+        };
 
-        mockAdd.mockReturnValue({
-            "restaurant": {
-                id: 3,
-                name: "South Coast Deli",
-                description: "Sandwiches and Salads"
-            }
-        });
+        axiosMock.onPost("/api/restaurants/post").reply( 202, restaurant );
 
-        render(
+        const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <RestaurantCreatePage />
                 </MemoryRouter>
             </QueryClientProvider>
-        )
+        );
 
-        const nameInput = screen.getByLabelText("Name");
-        expect(nameInput).toBeInTheDocument();
-
-
-        const descriptionInput = screen.getByLabelText("Description");
-        expect(descriptionInput).toBeInTheDocument();
-
-        const createButton = screen.getByText("Create");
-        expect(createButton).toBeInTheDocument();
-
-        await act(async () => {
-            fireEvent.change(nameInput, { target: { value: 'South Coast Deli' } })
-            fireEvent.change(descriptionInput, { target: { value: 'Sandwiches and Salads' } })
-            fireEvent.click(createButton);
+        await waitFor(() => {
+            expect(getByTestId("RestaurantForm-name")).toBeInTheDocument();
         });
 
-        await waitFor(() => expect(mockAdd).toHaveBeenCalled());
-        await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/restaurants"));
+        const nameField = getByTestId("RestaurantForm-name");
+        const addressField = getByTestId("RestaurantForm-address");
+        const cityField = getByTestId("RestaurantForm-city");
+        const stateField = getByTestId("RestaurantForm-state");
+        const zipField = getByTestId("RestaurantForm-zip");
+        const descriptionField = getByTestId("RestaurantForm-description");
+        const submitButton = getByTestId("RestaurantForm-submit");
 
-        // assert - check that the console.log was called with the expected message
-        expect(console.log).toHaveBeenCalled();
-        const message = console.log.mock.calls[0][0];
-        const expectedMessage =  `createdRestaurant: {"restaurant":{"id":3,"name":"South Coast Deli","description":"Sandwiches and Salads"}`
+        fireEvent.change(nameField, { target: { value: 'The' } })
+        fireEvent.change(addressField, { target: { value: '888' } })
+        fireEvent.change(cityField, { target: { value: 'Isla' } })
+        fireEvent.change(stateField, { target: { value: 'C' } })
+        fireEvent.change(zipField, { target: { value: '9311' } })
+        fireEvent.change(descriptionField, { target: { value: 'Burgers' } })
 
-        expect(message).toMatch(expectedMessage);
-        restoreConsole();
+        expect(submitButton).toBeInTheDocument();
 
+        fireEvent.click(submitButton);
+
+        await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
+
+        expect(axiosMock.history.post[0].params).toEqual(
+            {
+                "name": "The",
+                "address": "888",
+                "city": "Isla",
+                "state": "C",
+                "zip": "9311",
+                "description": "Burgers"      
+        });
+
+        expect(mockToast).toBeCalledWith("New restaurant Created - id: 17 name: The");
+        expect(mockNavigate).toBeCalledWith({ "to": "/restaurants/list" });
     });
 
+
 });
-
-
