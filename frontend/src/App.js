@@ -39,35 +39,11 @@ function App() {
         {
           hasRole(currentUser, "ROLE_USER") && (
             <>
-              
-              <Route exact path="/restaurants/details/:id" element={<RestaurantDetailsPage />} />      
-
-
-              <Route exact path="/Books/list" element={<BookIndexPage />} />
-              <Route exact path="/Books/details/:id" element={<BookDetailsPage />} />
-            </>
-          )
-        }
-        {
-          hasRole(currentUser, "ROLE_ADMIN") && (
-            <>
-              <Route exact path="/Books/create" element={<BookCreatePage />} />
-              <Route exact path="/Books/edit/:id" element={<BookEditPage />} />
-
-              <Route exact path="/restaurants/create" element={<RestaurantCreatePage />} />
-              <Route exact path="/restaurants/edit/:id" element={<RestaurantEditPage />} />
-              <Route exact path="/restaurants/" element={<RestaurantIndexPage />} />
-              <Route exact path="/restaurants/details/:id" element={<RestaurantDetailsPage />} />
-              
-            </>
-          )
-        }
-
-        {
-          hasRole(currentUser, "ROLE_USER") && (
-            <>
               <Route exact path="/ucsbdates/list" element={<UCSBDatesIndexPage />} />
-              
+              <Route exact path="/books/list" element={<BookIndexPage />} />
+              <Route exact path="/books/details/:id" element={<BookDetailsPage />} />
+              <Route exact path="/restaurants/list" element={<RestaurantIndexPage />} />
+              <Route exact path="/restaurants/details/:id" element={<RestaurantDetailsPage />} />
             </>
           )
         }
@@ -77,7 +53,11 @@ function App() {
               <Route exact path="/ucsbdates/edit/:id" element={<UCSBDatesEditPage />} />
               <Route exact path="/ucsbdates/create" element={<UCSBDatesCreatePage />} />
 
-              
+              <Route exact path="/books/edit/:todoId" element={<BookEditPage />} />
+              <Route exact path="/books/create" element={<BookCreatePage />} />
+
+              <Route exact path="/restaurants/create" element={<RestaurantCreatePage />} />
+              <Route exact path="/restaurants/edit/:id" element={<RestaurantEditPage />} />
             </>
           )
         }

@@ -28,7 +28,7 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
                 <Form.Group className="mb-3" >
                     <Form.Label htmlFor="id">Id</Form.Label>
                     <Form.Control
-                        data-testid={testIdPrefix + "-id"}
+                        data-testid="RestaurantForm-id"
                         id="id"
                         type="text"
                         {...register("id")}
@@ -55,6 +55,70 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.name?.message}
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="address">Address</Form.Label>
+                <Form.Control
+                    data-testid={testIdPrefix + "-address"}
+                    id="address"
+                    type="text"
+                    isInvalid={Boolean(errors.address)}
+                    {...register("address", {
+                        required: "Address is required."
+                    })}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.address?.message}
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="city">City</Form.Label>
+                <Form.Control
+                    data-testid={testIdPrefix + "-city"}
+                    id="city"
+                    type="text"
+                    isInvalid={Boolean(errors.city)}
+                    {...register("city", {
+                        required: "City is required.",
+                    })}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.city?.message}
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="state">State</Form.Label>
+                <Form.Control
+                    data-testid={testIdPrefix + "-state"}
+                    id="state"
+                    type="text"
+                    isInvalid={Boolean(errors.state)}
+                    {...register("state", {
+                        required: "State is required.",
+                    })}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.state?.message}
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="zip">Zip</Form.Label>
+                <Form.Control
+                    data-testid={testIdPrefix + "-zip"}
+                    id="zip"
+                    type="text"
+                    isInvalid={Boolean(errors.zip)}
+                    {...register("zip", {
+                        required: "Zip is required.",
+                    })}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.zip?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
