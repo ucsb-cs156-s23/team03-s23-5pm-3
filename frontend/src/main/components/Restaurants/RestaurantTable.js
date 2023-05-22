@@ -17,7 +17,7 @@ export default function RestaurantTable({ restaurants, currentUser }) {
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
-        ["/api/restaurants/all"]
+        ["/api/restaurant/all"]
     );
     // Stryker enable all 
 

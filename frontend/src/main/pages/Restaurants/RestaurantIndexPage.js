@@ -11,8 +11,8 @@ export default function RestaurantIndexPage() {
     const { data: restaurants, error: _error, status: _status } =
       useBackend(
         // Stryker disable next-line all : don't test internal caching of React Query
-        ["/api/restaurants/all"],
-        { method: "GET", url: "/api/restaurants/all" },
+        ["/api/restaurant/all"],
+        { method: "GET", url: "/api/restaurant/all" },
         []
       );
   

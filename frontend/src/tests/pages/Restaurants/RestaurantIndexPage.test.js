@@ -45,7 +45,7 @@ describe("RestaurantIndexPage tests", () => {
     test("renders without crashing for regular user", () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/restaurants/all").reply(200, []);
+        axiosMock.onGet("/api/restaurant/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -61,7 +61,7 @@ describe("RestaurantIndexPage tests", () => {
     test("renders without crashing for admin user", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/restaurants/all").reply(200, []);
+        axiosMock.onGet("/api/restaurant/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -75,7 +75,7 @@ describe("RestaurantIndexPage tests", () => {
     test("renders three dates without crashing for regular user", async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/restaurants/all").reply(200, restaurantFixtures.threeRestaurants);
+        axiosMock.onGet("/api/restaurant/all").reply(200, restaurantFixtures.threeRestaurants);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -94,7 +94,7 @@ describe("RestaurantIndexPage tests", () => {
     test("renders three restaurants without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/restaurants/all").reply(200, restaurantFixtures.threeRestaurants);
+        axiosMock.onGet("/api/restaurant/all").reply(200, restaurantFixtures.threeRestaurants);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -114,7 +114,7 @@ describe("RestaurantIndexPage tests", () => {
         setupUserOnly();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/restaurants/all").timeout();
+        axiosMock.onGet("/api/restaurant/all").timeout();
 
         const restoreConsole = mockConsole();
 
@@ -129,7 +129,7 @@ describe("RestaurantIndexPage tests", () => {
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
 
         const errorMessage = console.error.mock.calls[0][0];
-        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/restaurants/all");
+        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/restaurant/all");
         restoreConsole();
 
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
@@ -139,8 +139,8 @@ describe("RestaurantIndexPage tests", () => {
         setupAdminUser();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/restaurants/all").reply(200, restaurantFixtures.threeRestaurants);
-        axiosMock.onDelete("/api/restaurants").reply(200, "Restaurant with id 2 was deleted");
+        axiosMock.onGet("/api/restaurant/all").reply(200, restaurantFixtures.threeRestaurants);
+        axiosMock.onDelete("/api/restaurant").reply(200, "Restaurant with id 2 was deleted");
 
 
         const { getByTestId } = render(

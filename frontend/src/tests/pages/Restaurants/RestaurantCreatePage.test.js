@@ -63,7 +63,7 @@ describe("RestaurantCreatePage tests", () => {
             description: 'Burgers'         
         };
 
-        axiosMock.onPost("/api/restaurants/post").reply( 202, restaurant );
+        axiosMock.onPost("/api/restaurant/post").reply( 202, restaurant );
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>

@@ -36,7 +36,7 @@ describe("RestaurantDetailsPage tests", () => {
         axiosMock.resetHistory();
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-        axiosMock.onGet("/api/restaurants", { params: { id: 1 } }).reply(200, {
+        axiosMock.onGet("/api/restaurant", { params: { id: 1 } }).reply(200, {
             id: 1,
             name: "a",
             address: "b",
@@ -52,7 +52,7 @@ describe("RestaurantDetailsPage tests", () => {
         axiosMock.resetHistory();
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-        axiosMock.onGet("/api/restaurants", { params: { id: 1 } }).reply(200, {
+        axiosMock.onGet("/api/restaurant", { params: { id: 1 } }).reply(200, {
             id: 1,
             name: "a",
             address: "b",
@@ -68,7 +68,7 @@ describe("RestaurantDetailsPage tests", () => {
         axiosMock.resetHistory();
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-        axiosMock.onGet("/api/restaurants").timeout();
+        axiosMock.onGet("/api/restaurant").timeout();
         const queryClient = new QueryClient();
 
         const { queryByTestId, findByText  } = render(

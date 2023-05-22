@@ -44,7 +44,7 @@ describe("RestaurantEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/restaurants", { params: { id: 17 } }).timeout();
+            axiosMock.onGet("/api/restaurant", { params: { id: 17 } }).timeout();
         });
 
         const queryClient = new QueryClient();
@@ -74,7 +74,7 @@ describe("RestaurantEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/restaurants", { params: { id: 17 } }).reply(200, {
+            axiosMock.onGet("/api/restaurant", { params: { id: 17 } }).reply(200, {
                 "id": 17,
                  "name": "The Habit",
                  "address": "888 Embarcadero del Norte",
@@ -83,7 +83,7 @@ describe("RestaurantEditPage tests", () => {
                  "zip": "93117",
                  "description": "Burgers and Fries"      
                });
-            axiosMock.onPut('/api/restaurants').reply(200, {
+            axiosMock.onPut('/api/restaurant').reply(200, {
                 "id": 17,
                  "name": "The",
                  "address": "888",

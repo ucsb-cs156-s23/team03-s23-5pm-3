@@ -54,7 +54,7 @@ describe("restaurantUtils tests", () => {
 
             // assert
             expect(result).toEqual({
-                url: "/api/restaurants",
+                url: "/api/restaurant",
                 method: "DELETE",
                 params: { id: 17 }
             });
