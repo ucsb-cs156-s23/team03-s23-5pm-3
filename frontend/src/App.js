@@ -6,6 +6,8 @@ import AdminUsersPage from "main/pages/AdminUsersPage";
 import BookIndexPage from "main/pages/Books/BookIndexPage";
 import BookCreatePage from "main/pages/Books/BookCreatePage";
 import BookEditPage from "main/pages/Books/BookEditPage";
+import BookDetailsPage from "main/pages/Books/BookDetailsPage";
+
 
 import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
 import RestaurantEditPage from "main/pages/Restaurants/RestaurantEditPage";
