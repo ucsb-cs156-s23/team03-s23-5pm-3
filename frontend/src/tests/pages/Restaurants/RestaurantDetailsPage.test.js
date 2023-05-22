@@ -64,15 +64,10 @@ describe("RestaurantDetailsPage tests", () => {
     };
 
     test("renders without crashing", async () => {
-        // axiosMock.reset();
-        // axiosMock.resetHistory();
-        // axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
-        // axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-        // axiosMock.onGet("/api/restaurant").timeout();
         setupAdminUser();
         const queryClient = new QueryClient();
 
-        const { queryByTestId, findByText  } = render(
+        const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <RestaurantDetailsPage />
@@ -80,13 +75,12 @@ describe("RestaurantDetailsPage tests", () => {
             </QueryClientProvider>
         );
 
-        await findByText("Restaurant Details");
-        expect(queryByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument();
-        const deleteButton = queryByTestId(`${testId}-cell-row-0-col-Delete-button`);
+        await waitFor(() => {expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1")});
+        const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
         expect(deleteButton).toBeInTheDocument();
-        const editButton = queryByTestId(`${testId}-cell-row-0-col-Edit-button`);
+        const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
         expect(editButton).toBeInTheDocument();
-        const detailsButton = queryByTestId(`${testId}-cell-row-0-col-Details-button`);
+        const detailsButton = getByTestId(`${testId}-cell-row-0-col-Details-button`);
         expect(detailsButton).toBeInTheDocument();
     });
 
@@ -94,7 +88,7 @@ describe("RestaurantDetailsPage tests", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         
-        const { getByTestId, queryByText } = render(
+        const { getByTestId, getByText } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <RestaurantDetailsPage />
@@ -102,7 +96,7 @@ describe("RestaurantDetailsPage tests", () => {
             </QueryClientProvider>
         );
         await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
-        expect(queryByText("a")).toBeInTheDocument();
+        expect(getByText("a")).toBeInTheDocument();
 
         const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
         expect(deleteButton).toBeInTheDocument();
