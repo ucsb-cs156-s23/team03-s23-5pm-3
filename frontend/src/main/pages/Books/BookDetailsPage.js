@@ -15,23 +15,20 @@ export default function BooksDetailsPage() {
     useBackend(
       // Stryker disable next-line all : don't test internal caching of React Query
       [`/api/books?id=${id}`],
-      { method: "GET", 
+      { // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
+        method: "GET", 
         url: "/api/books", 
         params: {
           id
         } 
-      },
+      }
     );
-
-  console.log(book);
-
+    
   return (
     <BasicLayout>
       <div className="pt-2">
         <h1>Book Details</h1>
-        {
-          <BookTable books={[book]} currentUser={currentUser} showButtons={false}/>
-        }
+        {book && <BookTable books={[book]} currentUser={currentUser} showButtons={false}/>}
       </div>
     </BasicLayout>
   )

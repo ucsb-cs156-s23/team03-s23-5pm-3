@@ -98,6 +98,44 @@ describe("BookTable tests", () => {
 
   });
 
+  test("Has the expected column headers, content and buttons for ordinary user", () => {
+    const currentUser = currentUserFixtures.userOnly;
+
+    const { getByText, getByTestId, queryByText } = render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <BookTable books={bookFixtures.threeBooks} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+
+    );
+
+    const expectedHeaders = ["id", "Title", "Author", "Genre"];
+    const expectedFields = ["id", "title", "author", "genre"];
+    const testId = "BookTable";
+
+    expectedHeaders.forEach((headerText) => {
+      const header = getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
+
+    expectedFields.forEach((field) => {
+      const header = getByTestId(`${testId}-cell-row-0-col-${field}`);
+      expect(header).toBeInTheDocument();
+    });
+
+    expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3");
+    expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("4");
+
+    const detailsButton = getByTestId(`${testId}-cell-row-0-col-Details-button`);
+    expect(detailsButton).toBeInTheDocument();
+    expect(detailsButton).toHaveClass("btn-primary");
+
+    expect(queryByText("Delete")).not.toBeInTheDocument();
+    expect(queryByText("Edit")).not.toBeInTheDocument();
+  });
+
   test("Has the expected column headers, content and no buttons when showButtons=false", () => {
     const currentUser = currentUserFixtures.adminUser;
 

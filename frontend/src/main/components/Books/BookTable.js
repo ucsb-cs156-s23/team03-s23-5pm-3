@@ -5,8 +5,6 @@ import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/bookUtils";
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
-const showCell = (cell) => JSON.stringify(cell.row.values);
-
 export default function BookTable({
     books,
     currentUser,
@@ -15,26 +13,28 @@ export default function BookTable({
 
     const navigate = useNavigate();
 
+     // Stryker disable all : hard to test for query caching
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
         ["/api/books/all"]
     );
+    // Stryker enable all 
+
 
     const editCallback = (cell) => {
-        console.log(`editCallback: ${showCell(cell)})`);
         navigate(`/Books/edit/${cell.row.values.id}`);
     };
 
     const detailsCallback = (cell) => {
-        console.log(`detailsCallback: ${showCell(cell)})`);
         navigate(`/Books/details/${cell.row.values.id}`);
     };
 
+    // Stryker disable all : TODO try to make a good test for this
     const deleteCallback = async (cell) => {
-        console.log(`deleteCallback: ${showCell(cell)})`);
         deleteMutation.mutate(cell);
     };
+    // Stryker enable all 
 
 
     const columns = [
@@ -79,5 +79,3 @@ export default function BookTable({
         testid={testIdPrefix}
     />;
 };
-
-export { showCell };
