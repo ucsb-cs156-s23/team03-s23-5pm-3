@@ -1,65 +1,102 @@
-import { render, screen } from "@testing-library/react";
-import ParkDetailsPage from "main/pages/Parks/ParkDetailsPage";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+import ParkDetailsPage from "main/pages/Parks/ParkDetailsPage";
 
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useParams: () => ({
-        id: 3
-    }),
-    useNavigate: () => mockNavigate
-}));
+import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
+import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import { parkFixtures } from "fixtures/parkFixtures";
+import axios from "axios";
+import AxiosMockAdapter from "axios-mock-adapter";
+import mockConsole from "jest-mock-console";
 
-jest.mock('main/utils/parkUtils', () => {
+jest.mock("react-router-dom", () => {
+    const originalModule = jest.requireActual("react-router-dom");
     return {
         __esModule: true,
-        parkUtils: {
-            getById: (_id) => {
-                return {
-                    park: {
-                        id: 3,
-                        name: "Anderson Park",
-                        address: "123 Fake Ave",
-                        rating: "3.9"
-                    }
-                };
-            }
-        }
+        ...originalModule,
+        useParams: () => ({
+            id: 1,
+            name: "a",
+            address: "b",
+            rating: "c",
+        }),
     };
 });
 
 describe("ParkDetailsPage tests", () => {
 
-    const queryClient = new QueryClient();
-    test("renders without crashing", () => {
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <ParkDetailsPage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
+    const axiosMock = new AxiosMockAdapter(axios);
+
+    const testId = "ParkTable";
+
+    beforeEach(() => {
+        axiosMock.reset();
+        axiosMock.resetHistory();
+        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+        axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+        axiosMock.onGet("/api/parks", { params: { id: 1 } }).reply(200, {
+            id: 1,
+            name: "a",
+            address: "b",
+            rating: "c",
+        });
     });
 
-    test("loads the correct fields, and no buttons", async () => {
-        render(
+    const queryClient = new QueryClient();
+    test("renders header but table is not present when backend doesn't return a park", async () => {
+        axiosMock.reset();
+        axiosMock.resetHistory();
+        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+        axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+        axiosMock.onGet("/api/parks").timeout();
+
+        const restoreConsole = mockConsole();
+        const { queryByTestId, findByText } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <ParkDetailsPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
-        expect(screen.getByText("Anderson Park")).toBeInTheDocument();
-        expect(screen.getByText("123 Fake Ave")).toBeInTheDocument();
-        expect(screen.getByText("3.9")).toBeInTheDocument();
 
-        expect(screen.queryByText("Delete")).not.toBeInTheDocument();
-        expect(screen.queryByText("Edit")).not.toBeInTheDocument();
-        expect(screen.queryByText("Details")).not.toBeInTheDocument();
+        await findByText("Park Details");
+        expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
+        restoreConsole();
+    });
+
+    test("renders without crashing for regular user", async () => {
+
+        const { getByTestId, queryByText } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <ParkDetailsPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
+        expect(queryByText("Delete")).not.toBeInTheDocument();
+        expect(queryByText("Edit")).not.toBeInTheDocument();
+        expect(queryByText("Details")).not.toBeInTheDocument();
+
+    });
+
+    test("renders without crashing for admin user", async () => {
+
+        const { getByTestId, queryByText } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <ParkDetailsPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
+        expect(queryByText("Delete")).not.toBeInTheDocument();
+        expect(queryByText("Edit")).not.toBeInTheDocument();
+        expect(queryByText("Details")).not.toBeInTheDocument();
+
     });
 
 });
-
-
