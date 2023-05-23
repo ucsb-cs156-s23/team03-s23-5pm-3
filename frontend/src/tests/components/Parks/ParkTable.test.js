@@ -66,7 +66,7 @@ describe("ParkTable tests", () => {
 
     );
 
-    const expectedHeaders = ["id", "name", "Address", "Rating"];
+    const expectedHeaders = ["id", "Name", "Address", "Rating"];
     const expectedFields = ["id", "name", "address", "rating"];
     const testId = "ParkTable";
 
@@ -110,7 +110,7 @@ describe("ParkTable tests", () => {
 
     );
 
-    const expectedHeaders = ["id", "name", "Address", "Rating"];
+    const expectedHeaders = ["id", "Name", "Address", "Rating"];
     const expectedFields = ["id", "name", "address", "rating"];
     const testId = "ParkTable";
 
@@ -148,7 +148,7 @@ describe("ParkTable tests", () => {
 
     );
 
-    const expectedHeaders = ["id", "name", "Address", "Rating"];
+    const expectedHeaders = ["id", "Name", "Address", "Rating"];
     const expectedFields = ["id", "name", "address", "rating"];
     const testId = "ParkTable";
 
