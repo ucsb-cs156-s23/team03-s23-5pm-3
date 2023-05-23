@@ -5,7 +5,6 @@ import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
 export default function ParksCreatePage() {
-
   const objectToAxiosParams = (Park) => ({
     url: "/api/parks/post",
     method: "POST",
