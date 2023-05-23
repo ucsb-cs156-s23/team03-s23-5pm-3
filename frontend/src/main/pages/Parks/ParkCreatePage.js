@@ -4,27 +4,27 @@ import { Navigate } from 'react-router-dom'
 import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
-export default function ParkCreatePage() {
+export default function ParksCreatePage() {
 
-  const objectToAxiosParams = (park) => ({
-    url: "/api/park/post",
+  const objectToAxiosParams = (Park) => ({
+    url: "/api/parks/post",
     method: "POST",
     params: {
-      name: park.name,
-      address: park.address,
-      rating: park.rating
+      name: Park.name,
+      address: Park.address,
+      rating: Park.rating
     }
   });
 
-  const onSuccess = (park) => {
-    toast(`New park Created - id: ${park.id} name: ${park.name}`);
+  const onSuccess = (Park) => {
+    toast(`New Park Created - id: ${Park.id} name: ${Park.name}`);
   }
 
   const mutation = useBackendMutation(
     objectToAxiosParams,
      { onSuccess }, 
      // Stryker disable next-line all : hard to set up test for caching
-     ["/api/park/all"]
+     ["/api/parks/all"]
      );
 
   const { isSuccess } = mutation
@@ -34,7 +34,7 @@ export default function ParkCreatePage() {
   }
 
   if (isSuccess) {
-    return <Navigate to="/parks/list" />
+    return <Navigate to="/Parks/list" />
   }
 
   return (
