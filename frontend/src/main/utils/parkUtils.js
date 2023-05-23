@@ -1,3 +1,23 @@
+import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom'
+
+export function onDeleteSuccess(message) {
+    console.log(message);
+    toast(message);
+}
+
+export function cellToAxiosParamsDelete(cell) {
+    return {
+        url: "/api/parks",
+        method: "DELETE",
+        params: {
+            id: cell.row.values.id
+        }
+    }
+}
+
+
+
 // get parks from local storage
 const get = () => {
     const parkValue = localStorage.getItem("parks");
