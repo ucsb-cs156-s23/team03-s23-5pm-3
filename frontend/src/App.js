@@ -61,7 +61,7 @@ function App() {
               <Route exact path="/ucsbdates/edit/:id" element={<UCSBDatesEditPage />} />
               <Route exact path="/ucsbdates/create" element={<UCSBDatesCreatePage />} />
 
-              <Route exact path="/books/edit/:todoId" element={<BookEditPage />} />
+              <Route exact path="/books/edit/:id" element={<BookEditPage />} />
               <Route exact path="/books/create" element={<BookCreatePage />} />
 
               <Route exact path="/restaurants/create" element={<RestaurantCreatePage />} />
