@@ -8,6 +8,10 @@ import BookCreatePage from "main/pages/Books/BookCreatePage";
 import BookEditPage from "main/pages/Books/BookEditPage";
 import BookDetailsPage from "main/pages/Books/BookDetailsPage";
 
+import ParkIndexPage from "main/pages/Parks/ParkIndexPage";
+import ParkCreatePage from "main/pages/Parks/ParkCreatePage";
+import ParkEditPage from "main/pages/Parks/ParkEditPage";
+import ParkDetailsPage from "main/pages/Parks/ParkDetailsPage";
 
 import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
 import RestaurantEditPage from "main/pages/Restaurants/RestaurantEditPage";
@@ -17,6 +21,8 @@ import RestaurantDetailsPage from "main/pages/Restaurants/RestaurantDetailsPage"
 import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
+
+
 
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
@@ -44,6 +50,8 @@ function App() {
               <Route exact path="/books/details/:id" element={<BookDetailsPage />} />
               <Route exact path="/restaurants/list" element={<RestaurantIndexPage />} />
               <Route exact path="/restaurants/details/:id" element={<RestaurantDetailsPage />} />
+              <Route exact path="/parks/list" element={<ParkIndexPage />} />
+              <Route exact path="/parks/details/:id" element={<ParkDetailsPage />} />
             </>
           )
         }
@@ -58,6 +66,9 @@ function App() {
 
               <Route exact path="/restaurants/create" element={<RestaurantCreatePage />} />
               <Route exact path="/restaurants/edit/:id" element={<RestaurantEditPage />} />
+
+              <Route exact path="/parks/create" element={<ParkCreatePage />} />
+              <Route exact path="/parks/edit/:id" element={<ParkEditPage />} />
             </>
           )
         }
